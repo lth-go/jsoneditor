@@ -19,6 +19,10 @@
             margin-right: 10px;
             display: inline-block;
         }
+
+        .jsoneditor-dragarea {
+            display: none;
+        }
     </style>
 </head>
 
@@ -46,25 +50,16 @@
                 const path = node.path
 
                 function parseJson() {
-                    // let origin = editor2.get()
-                    // let value = origin
-                    // let lastSegment = path[path.length - 1]
-
-                    // path.forEach(function (segment, index) { // path is an array, loop through it
-                    //     if (index === path.length - 1) {
-                    //         return
-                    //     }
-                    //     value = value[segment]
-                    // })
-                    // value[lastSegment] = JSON.parse(value[lastSegment])
-
-                    // editor2.update(origin)
-
                     let updateNode = editor2.node.findNodeByPath(path)
-                    updateNode.setValue(JSON.parse(updateNode.getValue()))
 
-                    // 展开所有字段
-                    editor2.expandAll()
+                    let value = updateNode.getValue()
+
+                    if(typeof(value) == 'string') {
+                        updateNode.setValue(JSON.parse(value))
+
+                        // 展开所有字段
+                        updateNode.expand()
+                    }
                 }
 
                 // Create a new menu item. For our example, we only want to do this
