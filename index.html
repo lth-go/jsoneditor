@@ -1,22 +1,72 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>JSONEditor</title>
+  <meta charset="utf-8" />
 
-    <link href="./json.jpg" rel="icon" type="image/jpg">
-    <link href="./dist/jsoneditor.css" rel="stylesheet" type="text/css">
-    <script src="./dist/jsoneditor.js"></script>
-    <link href="./my.css" rel="stylesheet" type="text/css">
+  <title>JSONEditor</title>
+
+  <link href="./favicon.png" rel="icon" type="image/jpg">
+
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .outerbox {
+      display: flex;
+      justify-content: center;
+    }
+
+    #jsoneditor1,
+    #jsoneditor2 {
+      width: 600px;
+      height: 700px;
+      margin-right: 10px;
+    }
+
+    .jse-message.jse-success {
+      visibility: hidden;
+    }
+
+  </style>
 </head>
 
 <body>
-    <div class="outerbox">
-        <div id="jsoneditor1"></div>
-        <div id="jsoneditor2"></div>
-    </div>
+  <div class="outerbox">
+    <div id="jsoneditor1"></div>
+    <div id="jsoneditor2"></div>
+  </div>
 
-    <script src="./my.js"></script>
+  <script type="module">
+    import {JSONEditor} from 'https://cdn.jsdelivr.net/npm/vanilla-jsoneditor@0.14.4/index.min.js'
+
+    const editor1 = new JSONEditor({
+      target: document.getElementById('jsoneditor1'),
+      props: {
+        content: {
+          text: '',
+          json: undefined,
+        },
+        mode: 'text',
+        indentation: 2,
+        tabSize: 2,
+        onChange: (updatedContent, previousContent, {contentErrors, patchResult}) => {
+          editor2.set(updatedContent)
+        }
+      }
+    })
+
+    const editor2 = new JSONEditor({
+      target: document.getElementById('jsoneditor2'),
+      props: {
+        mode: 'tree',
+        navigationBar: false,
+        indentation: 2,
+        tabSize: 2,
+      }
+    })
+  </script>
 </body>
 
 </html>
